@@ -8,8 +8,8 @@ import (
 
 func main() {
 	cmd := exec.Command("ls")
-	stdout, err := cmd.StdoutPipe() //指向cmd命令的stdout
 	cmd.Start()
+	stdout, err := cmd.StdoutPipe() //指向cmd命令的stdout
 	content, err := ioutil.ReadAll(stdout)
 	if err != nil {
 		fmt.Println(err)
