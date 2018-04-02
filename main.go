@@ -4,6 +4,7 @@ import (
 	"os/exec"
 	"fmt"
 	"io/ioutil"
+	"bytes"
 )
 
 func main() {
@@ -14,6 +15,9 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	var bf1 bytes.Buffer
+	t.Stdout = &bf1
 
 	if err := t.Start(); err != nil {
 		fmt.Println(err)
@@ -30,12 +34,16 @@ func main() {
 		fmt.Println(e)
 	}
 
-	t2.Stdout = &t.Stdout
+
 	out2, err := t2.StdoutPipe()
 
 	if err:= t2.Start(); err != nil {
 		fmt.Println(err)
 	}
+
+	t2.Stdout = &bf1
+	var bf2 bytes.Buffer
+	t2.Stdout = &bf2
 
 	c, err := ioutil.ReadAll(out2)
 	fmt.Println(c)
