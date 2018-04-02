@@ -3,8 +3,6 @@ package main
 import (
 	"os/exec"
 	"fmt"
-	"bytes"
-	"io"
 	"io/ioutil"
 )
 
