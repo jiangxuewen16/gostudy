@@ -7,7 +7,8 @@ import (
 )
 
 func main() {
-	t := exec.Command("echo","-n","hello world!")
+	t := exec.Command("ps","aux")
+	t2 := exec.Command("grep","docker")
 
 	out,err := t.StdoutPipe()
 	if err != nil {
@@ -23,6 +24,25 @@ func main() {
 		fmt.Println(e)
 	}
 
-
 	fmt.Println(string(b))
+
+	if err := t.Wait(); err != nil {
+		fmt.Println(e)
+	}
+
+	t2.Stdout = &t.Stdout
+	out2, err := t2.StdoutPipe()
+
+	if err:= t2.Start(); err != nil {
+		fmt.Println(err)
+	}
+
+	c, err := ioutil.ReadAll(out2)
+	fmt.Println(c)
+
+	if err := t2.Wait(); err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println()
 }
