@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"bytes"
 	"io"
+	"io/ioutil"
 )
 
 func main() {
@@ -18,23 +19,12 @@ func main() {
 		fmt.Println(err)
 	}
 
-	var outBuff bytes.Buffer
 
-	for {
-		tmpout := make([]byte, 5)
-		n,err := out.Read(tmpout)
-		if err != nil {
-			if err == io.EOF {
-				return
-			} else {
-				fmt.Println(err)
-			}
-		}
-		if n > 0 {
-			outBuff.Write(tmpout[:n])
-		}
-
+	b,e := ioutil.ReadAll(out)
+	if e != nil {
+		fmt.Println(e)
 	}
 
-	fmt.Println(outBuff.String())
+
+	fmt.Println(string(b))
 }
