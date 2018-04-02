@@ -7,22 +7,12 @@ import (
 )
 
 func main() {
-	t := exec.Command("echo","-n","hello world!")
-	if err := t.Start(); err != nil {
-		fmt.Println(err)
-	}
-
-	out,err := t.StdoutPipe()
+	cmd := exec.Command("ls")
+	stdout, err := cmd.StdoutPipe() //指向cmd命令的stdout
+	cmd.Start()
+	content, err := ioutil.ReadAll(stdout)
 	if err != nil {
 		fmt.Println(err)
 	}
-
-
-	b,e := ioutil.ReadAll(out)
-	if e != nil {
-		fmt.Println(e)
-	}
-
-
-	fmt.Println(string(b))
+	fmt.Println(string(content))     //输出ls命令查看到的内容
 }
